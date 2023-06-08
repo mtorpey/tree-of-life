@@ -1,7 +1,7 @@
 import re, sys
 
 links = dict()
-lines = [line.strip() for line in open("PRUNED.txt", "r")]
+lines = [line.strip() for line in open("tree-data.txt", "r")]
 
 # process data into dictionary
 for line in lines:
