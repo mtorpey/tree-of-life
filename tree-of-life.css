@@ -1,0 +1,19 @@
+@import "/blog/assets/css/theme.css";
+
+details, div {
+    border-left: 1pt solid gray;
+    padding-left: 1em;
+}
+summary {
+    margin-left: -1em;
+    padding-left: 1em;
+    color: gray;
+}
+div {
+    font-weight: bold;
+}
+.scientific {
+    font-style: italic;
+    font-size: small;
+    font-weight: normal;
+}
