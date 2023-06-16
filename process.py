@@ -159,10 +159,10 @@ def get_common_name(species):
 # parse user args
 top = sys.argv[1]
 if len(sys.argv) == 3 and "." in sys.argv[2]:
-    targets = [line.strip().split(",")[1] for line in open(sys.argv[2], "r").readlines()]
+    targets = [line.strip().split(",")[0] for line in open(sys.argv[2], "r").readlines()]
     common_names = [tuple(line.strip().split(",")) for line in open(sys.argv[2], "r").readlines()]
     name_lookup = dict()
-    for common, scientific in common_names:
+    for scientific, common in common_names:
         name_lookup[scientific] = common
 elif len(sys.argv) > 1:
     targets = sys.argv[2:]
@@ -177,7 +177,7 @@ tree = {top: make_tree(links, top)}
 if targets:
     tree = pruned_tree(tree, targets)
 
-compress_tree(tree, show_all=True)
+compress_tree(tree, show_all=False)
 
 print_tree(tree, name_lookup=name_lookup)
 
