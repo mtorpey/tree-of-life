@@ -2,10 +2,11 @@ import requests, re
 from pypersist import persist
 
 API_URL = "https://species.wikimedia.org/w/api.php"
-lines = [line.strip() for line in open("tree-data.txt", "r")]
+FILENAME = "wikispecies/tree-data.txt"
 
 def get_tree(root):
     # process data into dictionary
+    lines = [line.strip() for line in open(FILENAME, "r")]
     links = dict()
     for line in lines:
         m = re.fullmatch("^(.*) -> (.*)$", line.strip())

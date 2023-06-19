@@ -1,5 +1,5 @@
 import sys
-import wikispecies
+import catalogue, wikispecies
 
 COMPRESS_SEPARATOR = " → "
 
@@ -113,12 +113,12 @@ else:
     targets = None
 
 # Handle underscores
-# TODO: do this inside pruned_tree
-if targets:
-    targets = [name.replace(" ", "_") for name in targets]
+# Only needed for wikispecies
+#if targets:
+#    targets = [name.replace(" ", "_") for name in targets]
 
 # make tree structure
-tree = wikispecies.get_tree(root)
+tree = catalogue.get_tree(root)
 if targets:
     tree = pruned_tree(tree, targets)
 compress_tree(tree, show_all=True)
