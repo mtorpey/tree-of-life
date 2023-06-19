@@ -1,31 +1,31 @@
-European Brown Bear,Ursus arctos arctos
-Eurasian Lynx,Lynx lynx
-Scottish Wildcat,Felis silvestris silvestris
-Asian Small-clawed Otter,Aonyx cinereus
-Eurasian Grey Wolf,Canis lupus lupus
-Axis Deer,Axis axis
-Barasingha Deer,Rucervus duvaucelii
-Bactrian Deer,Cervus hanglu bactrianus
-European Elk,Alces alces alces
-Fallow Deer,Dama dama
-Hog Deer,Axis porcinus
-Père David's Deer,Elaphurus davidianus
-Red Deer,Cervus elaphus
-Reeves' Muntjac Deer,Muntiacus reevesi
-Sika Deer,Cervus nippon
-Tundra Reindeer,Rangifer tarandus
-Wapiti,Cervus canadensis
-White-Lipped Deer,Cervus albirostris
-American Kestrel,Falco sparverius
-Eurasian Kestrel,Falco tinnunculus
-Eurasian Eagle Owl,Bubo bubo
-Striated Caracara,Phalcoboenus australis
-Harris Hawk,Parabuteo unicinctus
-Lanner Falcon,Falco biarmicus
-Lugger Falcon,Falco jugger
-Saker Falcon,Falco cherrug
-Snowy Owl,Bubo scandiacus
-Tawny Owl,Strix aluco
-Scottish Highland Cattle,Bos taurus
-Corn Snake,Pantherophis guttatus
-Giant African Snail,Achatinidae
+Ursus arctos arctos,European Brown Bear
+Lynx lynx,Eurasian Lynx
+Felis silvestris silvestris,Scottish Wildcat
+Aonyx cinereus,Asian Small-clawed Otter
+Canis lupus lupus,Eurasian Grey Wolf
+Axis axis,Axis Deer
+Rucervus duvaucelii,Barasingha Deer
+Cervus hanglu bactrianus,Bactrian Deer
+Alces alces alces,European Elk
+Dama dama,Fallow Deer
+Axis porcinus,Hog Deer
+Elaphurus davidianus,Père David's Deer
+Cervus elaphus,Red Deer
+Muntiacus reevesi,Reeves' Muntjac Deer
+Cervus nippon,Sika Deer
+Rangifer tarandus,Tundra Reindeer
+Cervus canadensis,Wapiti
+Cervus albirostris,White-Lipped Deer
+Falco sparverius,American Kestrel
+Falco tinnunculus,Eurasian Kestrel
+Bubo bubo,Eurasian Eagle Owl
+Phalcoboenus australis,Striated Caracara
+Parabuteo unicinctus,Harris Hawk
+Falco biarmicus,Lanner Falcon
+Falco jugger,Lugger Falcon
+Falco cherrug,Saker Falcon
+Bubo scandiacus,Snowy Owl
+Strix aluco,Tawny Owl
+Bos taurus,Scottish Highland Cattle
+Pantherophis guttatus,Corn Snake
+Achatinidae,Giant African Snail
