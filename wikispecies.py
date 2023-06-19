@@ -17,13 +17,12 @@ def get_tree(root):
     print(len(links), "nodes in tree")
     return make_tree(links, root)
 
-def make_tree(links, start):
-    tree = dict()
-    if start not in links:
-        return None
-    for child in links[start]:
-        tree[child] = make_tree(links, child)
-    return tree
+def make_tree(links, root_name):
+    children = []
+    if root_name in links:
+        for child_name in links[root_name]:
+            children.append(make_tree(links, child_name))
+    return {"name": root_name, "children": children}
 
 @persist
 def get_common_name(species):

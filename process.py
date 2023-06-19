@@ -4,6 +4,7 @@ import wikispecies
 COMPRESS_SEPARATOR = " → "
 
 def compress_tree(tree, show_all=True):
+    # TODO: new tree format
     while True:
         new_tree = tree.copy()
         changed = False
@@ -29,21 +30,22 @@ def compress_tree(tree, show_all=True):
 
 
 def print_tree(tree, indent=0, name_lookup=dict(), html=False, output=print):
-    for child in tree:
-        display_string = typeset_taxon_chain(child.replace("_", " "), name_lookup, html)
-        if html:
-            if tree[child] is None:
-                line = "<div>" + display_string + "</div>\n"
-            else:
-                line = "<details open>\n<summary>" + display_string + "</summary>\n"
+    name = tree["name"]
+    children = tree["children"]
+    display_string = typeset_taxon_chain(name.replace("_", " "), name_lookup, html)
+    is_leaf = len(children) == 0
+    if html:
+        if is_leaf:
+            line = "<div>" + display_string + "</div>\n"
         else:
-            line = indent * "│ " + display_string
-        output(line)
-        if tree[child] is not None:
-            print_tree(tree[child], indent + 1, name_lookup, html, output)
-        if html:
-            if tree[child] is not None:
-                output("</details>\n")
+            line = "<details open>\n<summary>" + display_string + "</summary>\n"
+    else:
+        line = indent * "│ " + display_string
+    output(line)
+    for child in children:
+        print_tree(child, indent + 1, name_lookup, html, output)
+    if html and not is_leaf:
+        output("</details>\n")
 
 
 def typeset_taxon_chain(chain, name_lookup, html):
@@ -88,19 +90,25 @@ def abbrev_species_name(name):
 
 
 def pruned_tree(tree, leaves):
-    if tree is None:
+    if "name" not in tree:  # TODO: remove
+        print(tree.keys())
+    name = tree["name"]
+    if name in leaves:  # discard children
+        return {"name": name, "children": []}
+
+    children = tree["children"]
+    pruned_children = []
+
+    for child in children:
+        print(type(child))
+        subtree = pruned_tree(child, leaves)
+        if subtree is not None:
+            pruned_children.append(subtree)
+
+    if len(pruned_children) == 0:
         return None
-    pruned = dict()
-    for child in tree:
-        if child in leaves:
-            pruned[child] = None
-        else:
-            subtree = pruned_tree(tree[child], leaves)
-            if subtree is not None:
-                pruned[child] = subtree
-    if len(pruned) == 0:
-        return None
-    return pruned
+
+    return {"name": name, "children": pruned_children}
 
 
 # parse user args
@@ -122,10 +130,11 @@ if targets:
     targets = [name.replace(" ", "_") for name in targets]
 
 # make tree structure
-tree = {root: wikispecies.get_tree(root)}
+tree = wikispecies.get_tree(root)
+print(tree["name"], len(tree["children"]))
 if targets:
     tree = pruned_tree(tree, targets)
-compress_tree(tree, show_all=True)
+#TODO compress_tree(tree, show_all=True)
 
 # print to screen
 print_tree(tree, name_lookup=name_lookup)
