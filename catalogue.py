@@ -32,6 +32,7 @@ def read_taxa(filename):
     print("Loaded")
     return taxa_by_id
 
+
 def make_forest(taxa_by_id):
     nodes_by_id = dict()
     root_ids = []
@@ -50,5 +51,19 @@ def make_forest(taxa_by_id):
 
     return [nodes_by_id[root_id] for root_id in root_ids]
 
+
+def get_subtree_from_forest(forest, root):
+    for tree in forest:
+        if (subtree := get_subtree(tree, root)) is not None:
+            return subtree
+    return None
+
+
+def get_subtree(tree, root):
+    # TODO
+    pass
+
 taxa_by_id = read_taxa("catalogue-of-life/NameUsage.tsv")
 trees = make_forest(taxa_by_id)
+
+# TODO: do we use the {name: X, children: [...]} style, or the {name: [children]} style?
