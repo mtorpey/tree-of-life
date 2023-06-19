@@ -1,9 +1,7 @@
-import re, requests, sys
-from pypersist import persist
+import sys
+import wikispecies
 
 COMPRESS_SEPARATOR = " → "
-
-links = dict()
 
 def compress_tree(tree, show_all=True):
     while True:
@@ -29,6 +27,7 @@ def compress_tree(tree, show_all=True):
         if tree[child] is not None:
             compress_tree(tree[child], show_all)
 
+
 def print_tree(tree, indent=0, name_lookup=dict(), html=False, output=print):
     for child in tree:
         display_string = typeset_taxon_chain(child.replace("_", " "), name_lookup, html)
@@ -46,16 +45,18 @@ def print_tree(tree, indent=0, name_lookup=dict(), html=False, output=print):
             if tree[child] is not None:
                 output("</details>\n")
 
+
 def typeset_taxon_chain(chain, name_lookup, html):
     taxa = chain.split(COMPRESS_SEPARATOR)
     outputs = [typeset_taxon(taxon, name_lookup, html) for taxon in taxa]
     return COMPRESS_SEPARATOR.join(outputs)
 
+
 def typeset_taxon(scientific, name_lookup, html):
     scientific_display = abbrev_species_name(scientific)
     if scientific in name_lookup:
         common_name = name_lookup[scientific]
-    elif (api_common_name := get_common_name(scientific)) is not None:
+    elif (api_common_name := wikispecies.get_common_name(scientific)) is not None:
         common_name = api_common_name
         name_lookup[scientific] = api_common_name  # for future runs
     else:
@@ -70,6 +71,7 @@ def typeset_taxon(scientific, name_lookup, html):
     else:
         return f"{common_name} ({scientific_display})" if common_name else scientific_display
 
+
 def abbrev_species_name(name):
     parts = name.split(" ")
 
@@ -83,6 +85,7 @@ def abbrev_species_name(name):
             return genus[0] + ". " + species[0] + ". " + subspecies
         
     return name
+
 
 def pruned_tree(tree, leaves):
     if tree is None:
@@ -101,7 +104,7 @@ def pruned_tree(tree, leaves):
 
 
 # parse user args
-top = sys.argv[1]
+root = sys.argv[1]
 if len(sys.argv) == 3 and "." in sys.argv[2]:
     targets = [line.strip().split(",")[0] for line in open(sys.argv[2], "r").readlines()]
     common_names = [tuple(line.strip().split(",")) for line in open(sys.argv[2], "r").readlines()]
@@ -113,18 +116,21 @@ elif len(sys.argv) > 1:
 else:
     targets = None
 
+# Handle underscores
+# TODO: do this inside pruned_tree
 if targets:
     targets = [name.replace(" ", "_") for name in targets]
 
 # make tree structure
-tree = {top: make_tree(links, top)}
+tree = {root: wikispecies.get_tree(root)}
 if targets:
     tree = pruned_tree(tree, targets)
+compress_tree(tree, show_all=True)
 
-compress_tree(tree, show_all=False)
-
+# print to screen
 print_tree(tree, name_lookup=name_lookup)
 
+# print to file
 with open("out.html", "w") as f:
     f.write("""<!DOCTYPE html>
 <html lang="en">

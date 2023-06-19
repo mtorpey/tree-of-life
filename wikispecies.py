@@ -1,17 +1,19 @@
-import requests
+import requests, re
+from pypersist import persist
 
 API_URL = "https://species.wikimedia.org/w/api.php"
 lines = [line.strip() for line in open("tree-data.txt", "r")]
 
-def get_tree_wikispecies(root):
+def get_tree(root):
     # process data into dictionary
+    links = dict()
     for line in lines:
         m = re.fullmatch("^(.*) -> (.*)$", line.strip())
         parent = m.group(1)
         child = m.group(2)
         if parent not in links:
             links[parent] = set()
-    links[parent].add(child)
+        links[parent].add(child)
     print(len(links), "nodes in tree")
     return make_tree(links, root)
 
